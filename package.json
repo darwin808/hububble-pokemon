@@ -29,6 +29,9 @@
     "tailwindcss": "3.3.1"
   },
   "config": {
+    "commitizenEmoji": {
+      "conventionalFormat": true
+    },
     "commitizen": {
       "path": "./node_modules/commitizen-emoji"
     }
