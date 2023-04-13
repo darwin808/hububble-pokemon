@@ -13,7 +13,7 @@ const ProfilePage = () => {
       </div>
       <div className="grid-cols-5">
         {starterPokemons.map((e: any) => {
-          return <Card data={e} onClick={() => {}} key={e.name} />
+          return <Card data={e} key={e.name} />
         })}
       </div>
     </div>

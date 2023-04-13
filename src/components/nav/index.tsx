@@ -3,7 +3,7 @@ import React from "react"
 
 export const Navbar = () => {
   return (
-    <div className="w-full h-40 bg-pink-50 flex justify-between">
+    <div className="px-96 py-4 text-2xl bg-white shadow-lg   w-full h-20  flex justify-between  mb-2 ">
       <div className="">
         <Link href={"/"}>Home</Link>
       </div>
