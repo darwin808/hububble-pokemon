@@ -1,3 +1,4 @@
+import { Card } from "@/components"
 import { AppContext } from "@/context"
 import React, { useContext } from "react"
 
@@ -10,7 +11,11 @@ const ProfilePage = () => {
       <div className="">
         <h2>{playerName}</h2>
       </div>
-      <div className="grid-cols-5">{JSON.stringify(starterPokemons)}</div>
+      <div className="grid-cols-5">
+        {starterPokemons.map((e: any) => {
+          return <Card data={e} onClick={() => {}} key={e.name} />
+        })}
+      </div>
     </div>
   )
 }

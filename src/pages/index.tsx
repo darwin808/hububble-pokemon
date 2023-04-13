@@ -71,7 +71,6 @@ export default function Home() {
         </Modal>
       )}
       {/* POKEMONS */}
-      <div className="bg-blue-400">{JSON.stringify(starterPokemons)}</div>
       <div className="grid-cols-5 grid gap-4">
         {pokemons?.map((e: IPokemonList) => {
           return <Card data={e} key={e.name} onClick={handleCardClick}></Card>
