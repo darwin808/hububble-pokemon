@@ -58,14 +58,24 @@ export default function Home() {
       </div>
       {modal && (
         <Modal>
-          <form action="submit" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="input your name"
-              value={playerName}
-              onChange={(e) => setplayerName(e.currentTarget.value)}
-            />
-            <button type="submit">ok</button>
+          <form
+            action="submit"
+            onSubmit={handleSubmit}
+            className="p-2 flex-col gap-2 flex text-center"
+          >
+            <h1 className="text-2xl">Enter your Name</h1>
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="Enter your name"
+                value={playerName}
+                onChange={(e) => setplayerName(e.currentTarget.value)}
+                className="w-full ring-2 ring-purple-300 p-2 focus:ring-purple-600 outline-none"
+              />
+              <Button type="submit" onClick={handleSubmit}>
+                Ok
+              </Button>
+            </div>
           </form>
         </Modal>
       )}
