@@ -10,6 +10,7 @@ import { bgChanger } from "@/utils"
 type IProps = {
   data: any
 }
+
 export const Card = ({ data }: IProps) => {
   const router = useRouter()
   const [loading, setloading] = useState(false)
@@ -45,12 +46,14 @@ export const Card = ({ data }: IProps) => {
   }, [])
 
   const type = types && types[0]?.type?.name
-  const bg = `${bgChanger(
-    type
-  )} box-border bg- border-4 ring-1 ring-gray-200 rounded-md p-4 drop-shadow-sm hover:drop-shadow-xl cursor-pointer h-64`
+
   if (loading) {
     return (
-      <div className={bg}>
+      <div
+        className={`${bgChanger(
+          type
+        )} box-border bg- border-4 ring-1 ring-gray-200 rounded-md p-4 drop-shadow-sm hover:drop-shadow-xl cursor-pointer h-64`}
+      >
         <div className="flex justify-center content-center   ">
           <Loader />
         </div>
@@ -58,7 +61,11 @@ export const Card = ({ data }: IProps) => {
     )
   }
   return (
-    <div className={bg}>
+    <div
+      className={`${bgChanger(
+        type
+      )} box-border bg- border-4 ring-1 ring-gray-200 rounded-md p-4 drop-shadow-sm hover:drop-shadow-xl cursor-pointer h-64`}
+    >
       <div
         className="flex justify-center content-center   "
         onClick={() => {

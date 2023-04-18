@@ -55,7 +55,7 @@ export default function Home() {
         callback: setpokemonList
       })
     }
-  }, [pokemonList.results])
+  }, [])
 
   useEffect(() => {
     if (starterPokemons.length === 6) {
@@ -107,8 +107,16 @@ export default function Home() {
           <form
             action="submit"
             onSubmit={handleConfirmStarter}
-            className="p-2 flex-col gap-2 flex text-center h-full"
+            className="p-2 flex-col gap-2 flex text-center h-full relative"
           >
+            <p
+              className="absolute top-0 right-0 cursor-pointer text-black hover:text-red-500"
+              onClick={() => {
+                setconfirmStarterModal(false)
+              }}
+            >
+              Close
+            </p>
             <h1 className="text-2xl">Your Starter Pokemons</h1>
             <div className="grid grid-cols-3 gap-4 h-full">
               {starterPokemons.map((e: any) => {
