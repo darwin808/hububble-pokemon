@@ -5,10 +5,14 @@ type IProps = {
   setstarterPokemons: any
   playerName: string
   setplayerName: any
+  pokemonList: any
+  setpokemonList: any
 }
 export const AppContext = createContext<IProps>({
   starterPokemons: [],
   setstarterPokemons: (e: any) => {},
   playerName: "",
-  setplayerName: (e: any) => {}
+  setplayerName: (e: any) => {},
+  pokemonList: {},
+  setpokemonList: (e: any) => {}
 })

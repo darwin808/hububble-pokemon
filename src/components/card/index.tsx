@@ -4,11 +4,14 @@ import { IPokemonList } from "@/types"
 import React, { useContext, useEffect, useState } from "react"
 import { Loader } from "../loader"
 import { Button } from "../button"
+import { useRouter } from "next/router"
+import { bgChanger } from "@/utils"
 
 type IProps = {
   data: any
 }
 export const Card = ({ data }: IProps) => {
+  const router = useRouter()
   const [loading, setloading] = useState(false)
   const context = useContext(AppContext)
   const starterPokemons = context.starterPokemons
@@ -42,50 +45,9 @@ export const Card = ({ data }: IProps) => {
   }, [])
 
   const type = types && types[0]?.type?.name
-  const bgChanger = () => {
-    switch (type) {
-      case "grass":
-        return "bg-green-200"
-      case "bug":
-        return "bg-green-200"
-      case "poison":
-        return "bg-green-500"
-      case "fire":
-        return "bg-orange-400"
-      case "water":
-        return "bg-blue-200"
-      case "normal":
-        return "bg-beige"
-      case "ground":
-        return "bg-beige"
-      case "fighting":
-        return "bg-beige"
-      case "flying":
-        return "bg-beige"
-      case "rock":
-        return "bg-beige"
-      case "psychic":
-        return "bg-yellow-300"
-      case "steel":
-        return "bg-gray-200"
-      case "dark":
-        return "bg-violet-400"
-      case "ice":
-        return "bg-sky-500/75 "
-      case "dragon":
-        return "bg-orange-500/75 "
-      case "ghost":
-        return "bg-purple-500/75 "
-      case "electric":
-        return "bg-orange-400"
-      case "fairy":
-        return "bg-pink-100"
-
-      default:
-        return "bg-white"
-    }
-  }
-  const bg = `${bgChanger()} box-border bg- border-4 ring-1 ring-gray-200 rounded-md p-4 drop-shadow-sm hover:drop-shadow-xl cursor-pointer h-64`
+  const bg = `${bgChanger(
+    type
+  )} box-border bg- border-4 ring-1 ring-gray-200 rounded-md p-4 drop-shadow-sm hover:drop-shadow-xl cursor-pointer h-64`
   if (loading) {
     return (
       <div className={bg}>
@@ -97,7 +59,13 @@ export const Card = ({ data }: IProps) => {
   }
   return (
     <div className={bg}>
-      <div className="flex justify-center content-center   ">
+      <div
+        className="flex justify-center content-center   "
+        onClick={() => {
+          console.log(data, 444)
+          router.push(`/pokemon/${pokemon.id}`)
+        }}
+      >
         {Object?.keys(sprites || {}).length !== 0 && !loading ? (
           <img src={sprites?.front_default} alt="" width={100} height={100} />
         ) : (

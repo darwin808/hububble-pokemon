@@ -9,13 +9,15 @@ export default function Home() {
   const router = useRouter()
   const context = useContext(AppContext)
   const [modal, setmodal] = useState(false)
-  const [pokemonList, setpokemonList] = useState<any>([])
   const [serch11, setserch11] = useState<string>("")
   const [confirmStarterModal, setconfirmStarterModal] = useState(false)
 
   const playerName = context.playerName
   const setplayerName = context.setplayerName
   const starterPokemons = context.starterPokemons
+
+  const pokemonList = context.pokemonList
+  const setpokemonList = context.setpokemonList
 
   const [currentPage, setcurrentPage] = useState<number>(1)
   const postperPage = 20
@@ -48,10 +50,12 @@ export default function Home() {
   }, [playerName])
 
   useEffect(() => {
-    getPokemons({
-      callback: setpokemonList
-    })
-  }, [])
+    if (pokemonList?.results?.length === 0 || pokemonList) {
+      getPokemons({
+        callback: setpokemonList
+      })
+    }
+  }, [pokemonList.results])
 
   useEffect(() => {
     if (starterPokemons.length === 6) {

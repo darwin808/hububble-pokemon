@@ -28,4 +28,5 @@ export const getPokemons = async ({
       return []
     })
   callback(res)
+  return res
 }

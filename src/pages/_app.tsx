@@ -9,8 +9,18 @@ const inter = Inter({ subsets: ["latin"] })
 export default function App({ Component, pageProps }: AppProps) {
   const [starterPokemons, setstarterPokemons] = useState<string[]>([])
   const [playerName, setplayerName] = useState("")
+  const [pokemonList, setpokemonList] = useState<any>([])
   return (
-    <AppContext.Provider value={{ starterPokemons, setstarterPokemons, playerName, setplayerName }}>
+    <AppContext.Provider
+      value={{
+        starterPokemons,
+        setstarterPokemons,
+        playerName,
+        setplayerName,
+        pokemonList,
+        setpokemonList
+      }}
+    >
       <main className={inter.className}>
         <Navbar />
         <Component {...pageProps} />
