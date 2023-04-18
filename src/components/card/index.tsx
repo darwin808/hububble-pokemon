@@ -2,11 +2,14 @@ import { AppContext } from "@/context"
 import { getPokemons } from "@/services"
 import { IPokemonList } from "@/types"
 import React, { useContext, useEffect, useState } from "react"
+import { Loader } from "../loader"
+import { Button } from "../button"
 
 type IProps = {
   data: any
 }
 export const Card = ({ data }: IProps) => {
+  const [loading, setloading] = useState(false)
   const context = useContext(AppContext)
   const starterPokemons = context.starterPokemons
   const setstarterPokemons = context.setstarterPokemons
@@ -35,13 +38,8 @@ export const Card = ({ data }: IProps) => {
   }
 
   useEffect(() => {
-    console.log(types)
-    getPokemons({ callback: setpokemon, url })
+    getPokemons({ callback: setpokemon, url, loading, setloading })
   }, [])
-
-  useEffect(() => {
-    console.log(pokemon)
-  }, [pokemon])
 
   const type = types && types[0]?.type?.name
   const bgChanger = () => {
@@ -61,6 +59,8 @@ export const Card = ({ data }: IProps) => {
       case "ground":
         return "bg-beige"
       case "fighting":
+        return "bg-beige"
+      case "flying":
         return "bg-beige"
       case "rock":
         return "bg-beige"
@@ -85,28 +85,40 @@ export const Card = ({ data }: IProps) => {
         return "bg-white"
     }
   }
+  const bg = `${bgChanger()} box-border bg- border-4 ring-1 ring-gray-200 rounded-md p-4 drop-shadow-sm hover:drop-shadow-xl cursor-pointer h-64`
+  if (loading) {
+    return (
+      <div className={bg}>
+        <div className="flex justify-center content-center   ">
+          <Loader />
+        </div>
+      </div>
+    )
+  }
   return (
-    <div
-      className={`${bgChanger()}  bg- border-4 ring-1 ring-gray-200 rounded-md p-4 drop-shadow-sm hover:drop-shadow-xl cursor-pointer`}
-    >
-      <img src={sprites?.front_default} alt="" width={100} />
-      <h6>{name}</h6>
-      <h5>{type}</h5>
-      {!isExistInStarter ? (
-        <button
-          onClick={handleAdd}
-          className="px-4 py-2 text-white  border-r-2 bg-purple-600 rounded-md"
-        >
-          Add
-        </button>
-      ) : (
-        <button
-          onClick={handleRemove}
-          className="px-4 py-2 text-white  border-r-2 bg-red-600 rounded-md"
-        >
-          remove
-        </button>
-      )}
+    <div className={bg}>
+      <div className="flex justify-center content-center   ">
+        {Object?.keys(sprites || {}).length !== 0 && !loading ? (
+          <img src={sprites?.front_default} alt="" width={100} height={100} />
+        ) : (
+          <Loader />
+        )}
+      </div>
+      <div className="block h-20 ">
+        <h6 className="text-xl capitalize">Name: {name}</h6>
+        <h5 className="text-sm ">Type: {type}</h5>
+      </div>
+      <div className="h-10 w-full  flex justify-end    flex-col">
+        <div className="block">
+          {!isExistInStarter ? (
+            <Button onClick={handleAdd}>Add</Button>
+          ) : (
+            <Button onClick={handleRemove} bg="bg-red-700">
+              remove
+            </Button>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

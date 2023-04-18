@@ -2,16 +2,20 @@ import { Button, Card, Modal } from "@/components"
 import { AppContext } from "@/context"
 import { getPokemons } from "@/services"
 import { IPokemonList } from "@/types"
+import { useRouter } from "next/router"
 import React, { useContext, useEffect, useState } from "react"
 
 export default function Home() {
+  const router = useRouter()
   const context = useContext(AppContext)
   const [modal, setmodal] = useState(false)
   const [pokemonList, setpokemonList] = useState<any>([])
   const [serch11, setserch11] = useState<string>("")
+  const [confirmStarterModal, setconfirmStarterModal] = useState(false)
 
   const playerName = context.playerName
   const setplayerName = context.setplayerName
+  const starterPokemons = context.starterPokemons
 
   const [currentPage, setcurrentPage] = useState<number>(1)
   const postperPage = 20
@@ -21,6 +25,11 @@ export default function Home() {
     setmodal(false)
   }
 
+  const handleConfirmStarter = (e: any) => {
+    e.preventDefault()
+    setconfirmStarterModal(false)
+    router.push("/profile")
+  }
   const indexoflast = currentPage * postperPage
   const indexoffirst = indexoflast - postperPage
   const pageNum = []
@@ -39,8 +48,18 @@ export default function Home() {
   }, [playerName])
 
   useEffect(() => {
-    getPokemons({ callback: setpokemonList })
+    getPokemons({
+      callback: setpokemonList
+    })
   }, [])
+
+  useEffect(() => {
+    if (starterPokemons.length === 6) {
+      setconfirmStarterModal(true)
+    } else {
+      setconfirmStarterModal(false)
+    }
+  }, [starterPokemons])
 
   return (
     <main className="bg-mainbg h-screen ">
@@ -72,7 +91,28 @@ export default function Home() {
                 onChange={(e) => setplayerName(e.currentTarget.value)}
                 className="w-full ring-2 ring-purple-300 p-2 focus:ring-purple-600 outline-none"
               />
-              <Button type="submit" onClick={handleSubmit}>
+              <Button type="submit" onClick={handleSubmit} width="w-20">
+                Ok
+              </Button>
+            </div>
+          </form>
+        </Modal>
+      )}
+      {confirmStarterModal && (
+        <Modal width="w-3/6 h-5/6">
+          <form
+            action="submit"
+            onSubmit={handleConfirmStarter}
+            className="p-2 flex-col gap-2 flex text-center h-full"
+          >
+            <h1 className="text-2xl">Your Starter Pokemons</h1>
+            <div className="grid grid-cols-3 gap-4 h-full">
+              {starterPokemons.map((e: any) => {
+                return <Card data={e} key={e.name}></Card>
+              })}
+            </div>
+            <div className="flex gap-2">
+              <Button type="submit" onClick={handleConfirmStarter}>
                 Ok
               </Button>
             </div>
