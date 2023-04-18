@@ -12,7 +12,6 @@ export const getPokemons = async ({
   setloading = (e: boolean) => {},
   loading
 }: IProps) => {
-  console.log(loading, "fetch")
   setloading(true)
   if (!url) {
     url = BASE_URL + "pokemon?limit=100000&offset=0"
